@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "cs-ii-isp-automatic-differentiation"
+version = "0.1.0"
+description = "Our CS 2 ISP project!"
+authors = ["Krishna Shah <kshahusa@gmail.com>", "Aryan Verma <aryanjverma2@gmail.com>", "Brennan Coil <nerblioc@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
