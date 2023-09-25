@@ -1,44 +1,31 @@
+import random, string
+
+import networkx as nx
+from matplotlib import pyplot as plt
+
+
 class Scope:
     def __init__(self):
-        self.scope = []
-    def add(self, variable, constant):
-        variable.value += constant
-        return variable.value, 1
-
-    def multiply(self, variable, constant):
-        variable.value *= constant
-        return variable.value, constant
-
-    def gradient(self):
-        gradient = 1
-        for s in self.scope:
-
-            if type(s[0]) == Variable:
-                print(s[0]())
-                print(s[0].value)
-            else:
-                print(s[0](s[1], s[2]))
-                print(s)
-                gradient *= s[0](s[1], s[2])[1]
-        print(gradient)
+        self.scope = nx.DiGraph()
 
 class Variable:
-    def __init__(self, value):
-        self.value = value
-        self.scope = Scope()
-        self.scope.scope.append([self])
-    def __add__(self, constant):
-        self.scope.scope.append([self.scope.add, self, constant])
-        return self
-    def __mul__(self, constant):
-        self.scope.scope.append([self.scope.multiply, self, constant])
-        return self
-    def __call__(self):
-        return self.value, 1
+    def __init__(self, name):
+        self.name = name
+        self.rootscope = Scope()
+        self.rootscope.scope.add_node(self.name)
+        self.join_head = 'x'
 
-x = Variable(3)
-x = x + 5
-x = x + 7
-x = x*2
-# print(x.scope.scope)
-x.scope.gradient()
+    def __mul__(self, other):
+        self.name = self.join_head
+        self.join_head = ''.join(random.choices(string.ascii_uppercase +
+                             string.digits, k=7))
+        self.rootscope.scope.add_edge(self.name, self.join_head)
+        self.rootscope.scope.add_edge(str(other), self.join_head)
+        return self
+
+x = Variable('x')
+x *= 3
+x *= 4
+pos = nx.nx_pydot.pydot_layout(x.rootscope.scope)
+nx.draw_networkx(x.rootscope.scope, pos=pos, with_labels=True)
+plt.show()
