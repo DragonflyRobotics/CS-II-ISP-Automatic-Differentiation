@@ -1,6 +1,16 @@
-diffEquation = "( x ^ 2 ) * ( 4  + 5 / x )"
+diffEquation = "( ( x^ 2) +6 * x) * ( 4 + 5 / x )"
+diffEquation = diffEquation.replace(" ", "")
 
-diffEquation = diffEquation.split(" ")        
+
+def tokenize(string):
+    string = string.replace(" ", "")
+    array = []
+    for c in string:
+        array.append(c)
+    return array
+
+diffEquation = tokenize(diffEquation)
+
 def isfloat(number):
     try: 
         float(number)
