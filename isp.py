@@ -105,10 +105,10 @@ class Variable:
 
 x = Variable('x')
 x = x**2
-x = x * x._paren()==(x*8)
+x = x * (x*8)
 
 # x = x._paren()==(x**2) * x._paren()==(x*8)#+ (x*8) + x#x-(x * 8)
 # x = (x+2) * (8 * x) - 4 + (2 * x)
 pos = nx.nx_pydot.pydot_layout(x.rootscope.scope)
 nx.draw_networkx(x.rootscope.scope, pos=pos, with_labels=True)
-plt.show()
+plt.savefig("fig.png")
