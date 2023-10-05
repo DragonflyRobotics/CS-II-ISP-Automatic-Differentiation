@@ -104,27 +104,26 @@ class ASTGraph:
 		return "UNK"
 
 	def getAST(self, shuntyardresult):
-		shuntres = shuntyardresult
 		graph = nx.DiGraph()
 
-		while self.checkForOperators(shuntres):
+		while self.checkForOperators(shuntyardresult):
 			counter = 0
-			while shuntres[counter] not in self.operations:
+			while shuntyardresult[counter] not in self.operations:
 				counter += 1
-			print(f"Stopped @: {counter}")
+			print(f"Stopped @: {shuntyardresult[counter]}")
 
-			if (counter - 2 >= 0 and self.isValue(shuntres[counter - 1]) and self.isValue(shuntres[counter - 2])):
-				node_name = self.returnOperatorName(shuntres[counter]) + "_" + ''.join(
+			if (counter - 2 >= 0 and self.isValue(shuntyardresult[counter - 1]) and self.isValue(shuntyardresult[counter - 2])):
+				node_name = self.returnOperatorName(shuntyardresult[counter]) + "_" + ''.join(
 					random.choices(string.ascii_uppercase +
 					               string.digits, k=3))
-				graph.add_edge(str(shuntres[counter - 2]), node_name)
-				graph.add_edge(str(shuntres[counter - 1]), node_name)
-				print(f"{str(shuntres[counter - 2])} --> {node_name}")
-				print(f"{str(shuntres[counter - 1])} --> {node_name}")
+				graph.add_edge(str(shuntyardresult[counter - 2]), node_name)
+				graph.add_edge(str(shuntyardresult[counter - 1]), node_name)
+				print(f"{str(shuntyardresult[counter - 2])} --> {node_name}")
+				print(f"{str(shuntyardresult[counter - 1])} --> {node_name}")
 
 				for _ in range(3):
-					shuntres.pop(counter - 2)
-				shuntres.insert(counter - 2, node_name)
+					shuntyardresult.pop(counter - 2)
+				shuntyardresult.insert(counter - 2, node_name)
 
 		return graph
 

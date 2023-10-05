@@ -12,7 +12,7 @@ from CalCoolUs.preprocess import ASTGraph
 
 myASTGraph = ASTGraph()
 graph = myASTGraph.getAST(shuntres)
-pos = nx.spring_layout(graph, scale=3)
+pos = nx.planar_layout(graph, scale=40)
 nx.draw_networkx(graph, pos=pos, with_labels=True)
 # plt.savefig("fig.png")
 plt.show(bbox_inches='tight')
