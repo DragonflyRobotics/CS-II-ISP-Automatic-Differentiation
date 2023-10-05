@@ -127,4 +127,14 @@ class ASTGraph:
 
 		return graph
 
+	def saveGraph(self, graph, filename):
+		pos = nx.planar_layout(graph, scale=40)
+		nx.draw_networkx(graph, pos=pos, with_labels=True)
+		plt.savefig(filename)
+
+	def displayGraph(self, graph):
+		pos = nx.planar_layout(graph, scale=40)
+		nx.draw_networkx(graph, pos=pos, with_labels=True)
+		plt.show(bbox_inches='tight')
+
 
