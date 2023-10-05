@@ -5,14 +5,24 @@ from matplotlib import pyplot as plt
 class ShuntingYard:
 	def __init__(self):
 		self.operations = ["+", "-", "/", "*", "^"]
-
+	
 	def tokenize(self, string):
 		r = [""]
+		string = string.replace(" ", "")
 		for i in string:
 			if (i.isdigit() or i == ".") and self.isfloat(r[-1]):
 				r[-1] = r[-1] + i
 			else:
 				r.append(i)
+		lowerBound = 0	
+		upperBound = len(r) - 1
+		while lowerBound < upperBound:
+			if r[lowerBound]== "-" and (r[lowerBound - 1] in self.operations or r[lowerBound - 1] == "(" or lowerBound == 0):
+				number = r[lowerBound + 1]
+				r[lowerBound] = f"-{number}"
+				r.pop(lowerBound + 1)
+				upperBound -= 1
+			lowerBound += 1
 		return r[1:]
 
 	def isfloat(self, number):
