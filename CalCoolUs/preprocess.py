@@ -73,6 +73,16 @@ class ASTGraph:
 	def __init__(self):
 		self.operations = ["+", "-", "/", "*", "^"]
 
+	def isValue(self, number):
+		return self.isfloat(number) or number == 'x' or isinstance(number, str)
+
+	def isfloat(self, number):
+		try:
+			float(number)
+			return True
+		except:
+			return False
+
 	def checkForOperators(self, queue):
 		for q in queue:
 			if q in self.operations:
@@ -103,7 +113,7 @@ class ASTGraph:
 				counter += 1
 			print(f"Stopped @: {counter}")
 
-			if (counter - 2 >= 0 and ShuntingYard.isValue(shuntres[counter - 1]) and ShuntingYard.isValue(shuntres[counter - 2])):
+			if (counter - 2 >= 0 and self.isValue(shuntres[counter - 1]) and self.isValue(shuntres[counter - 2])):
 				node_name = self.returnOperatorName(shuntres[counter]) + "_" + ''.join(
 					random.choices(string.ascii_uppercase +
 					               string.digits, k=3))
