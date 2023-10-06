@@ -56,7 +56,7 @@ class ShuntingYard:
 		outputQueue = []
 		operatorStack = []
 		for value in diffEquation:
-			if self.isfloat(value) or value == "x":
+			if self.isfloat(value) or value == "x" or value == "-x":
 				outputQueue.append(value)
 			elif value == "(":
 				operatorStack.append(value)

@@ -5,9 +5,7 @@ from CalCoolUs.preprocess import ShuntingYard
 
 myshunt = ShuntingYard()
 
-print(myshunt.tokenize("( (( -x^ -200.31419)) +66 * -75) * ( -74 + -75 / x )"))
-
-shuntres = myshunt.getPostfix("( (( x^ 200.31419)) +66 * x) * ( 74 + 75 / x )")
+shuntres = myshunt.getPostfix("( (( x^ -200.31419)) +66 * -x) * ( 74 + 75 / x )")
 print(shuntres)
 from CalCoolUs.preprocess import ASTGraph
 
