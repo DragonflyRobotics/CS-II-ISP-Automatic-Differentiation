@@ -23,6 +23,12 @@ class ShuntingYard:
 				r.pop(lowerBound + 1)
 				upperBound -= 1
 			lowerBound += 1
+		upperBound = len(r) - 1
+		for index in range(0, upperBound):
+			if r[index] == "-x":
+				r[index] = "x"
+				r.insert(index + 1, "*")
+				r.insert(index + 2, "-1")
 		return r[1:]
 
 	def isfloat(self, number):
@@ -56,7 +62,7 @@ class ShuntingYard:
 		outputQueue = []
 		operatorStack = []
 		for value in diffEquation:
-			if self.isfloat(value) or value == "x" or value == "-x":
+			if self.isfloat(value) or value == "x":
 				outputQueue.append(value)
 			elif value == "(":
 				operatorStack.append(value)
@@ -120,7 +126,7 @@ class ASTGraph:
 			counter = 0
 			while shuntyardresult[counter] not in self.operations:
 				counter += 1
-			print(f"Stopped @: {shuntyardresult[counter]}")
+			# print(f"Stopped @: {shuntyardresult[counter]}")
 
 			if (counter - 2 >= 0 and self.isValue(shuntyardresult[counter - 1]) and self.isValue(shuntyardresult[counter - 2])):
 				node_name = self.returnOperatorName(shuntyardresult[counter]) + "_" + ''.join(
@@ -134,6 +140,7 @@ class ASTGraph:
 				for _ in range(3):
 					shuntyardresult.pop(counter - 2)
 				shuntyardresult.insert(counter - 2, node_name)
+				
 
 		return graph
 
