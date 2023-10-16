@@ -23,12 +23,18 @@ class ShuntingYard:
 				r.pop(lowerBound + 1)
 				upperBound -= 1
 			lowerBound += 1
+		
+		lowerBound = 0	
 		upperBound = len(r) - 1
-		for index in range(0, upperBound):
-			if r[index] == "-x":
-				r[index] = "x"
-				r.insert(index + 1, "*")
-				r.insert(index + 2, "-1")
+		while lowerBound < upperBound:
+			if r[lowerBound] == "-x":
+				r[lowerBound] = "-1"
+				r.insert(lowerBound + 1, "*")
+				r.insert(lowerBound + 2, "x")
+				lowerBound +=2
+				upperBound +=2
+			lowerBound += 1
+			
 		return r[1:]
 
 	def isfloat(self, number):
@@ -58,7 +64,6 @@ class ShuntingYard:
 	def getPostfix(self, diffEquation):
 		diffEquation = diffEquation.replace(" ", "")
 		diffEquation = self.tokenize(diffEquation)
-
 		outputQueue = []
 		operatorStack = []
 		for value in diffEquation:
@@ -79,6 +84,7 @@ class ShuntingYard:
 				       and self.precedence(operatorStack[-1]) >= self.precedence(value)):
 					outputQueue.append(operatorStack.pop())
 				operatorStack.append(value)
+			
 		while operatorStack:
 			outputQueue.append(operatorStack.pop())
 
