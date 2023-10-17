@@ -7,7 +7,7 @@ myshunt = ShuntingYard()
 
 shuntres = myshunt.getPostfix("( (( -x^ -200.31419)) +66 * -x) * ( 74 + 75 * -x )")
 print(shuntres)
-exit(4)
+
 from CalCoolUs.preprocess import ASTGraph
 
 myASTGraph = ASTGraph()
