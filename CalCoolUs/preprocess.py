@@ -2,6 +2,14 @@ import random, string
 import networkx as nx
 from matplotlib import pyplot as plt
 
+
+from CalCoolUs.ops.op_types import OpType
+
+
+
+
+
+
 class ShuntingYard:
 	def __init__(self):
 		self.operations = ["+", "-", "/", "*", "^"]
@@ -88,6 +96,8 @@ class ShuntingYard:
 		while operatorStack:
 			outputQueue.append(operatorStack.pop())
 
+		print(outputQueue)
+
 		return outputQueue
 
 
@@ -114,15 +124,15 @@ class ASTGraph:
 	def returnOperatorName(self, operator):
 		match operator:
 			case "+":
-				return "ADD"
+				return OpType.ADD
 			case "-":
-				return "SUB"
+				return OpType.SUB
 			case "*":
-				return "MUL"
+				return OpType.MUL
 			case "/":
-				return "DIV"
+				return OpType.DIV
 			case "^":
-				return "POW"
+				return OpType.POW
 		return "UNK"
 
 	def getAST(self, shuntyardresult):
@@ -135,13 +145,14 @@ class ASTGraph:
 			# print(f"Stopped @: {shuntyardresult[counter]}")
 
 			if (counter - 2 >= 0 and self.isValue(shuntyardresult[counter - 1]) and self.isValue(shuntyardresult[counter - 2])):
-				node_name = self.returnOperatorName(shuntyardresult[counter]) + "_" + ''.join(
+				node_name = self.returnOperatorName(shuntyardresult[counter]).name + "_" + ''.join(
 					random.choices(string.ascii_uppercase +
 					               string.digits, k=3))
 				graph.add_edge(str(shuntyardresult[counter - 2]), node_name)
 				graph.add_edge(str(shuntyardresult[counter - 1]), node_name)
 				print(f"{str(shuntyardresult[counter - 2])} --> {node_name}")
 				print(f"{str(shuntyardresult[counter - 1])} --> {node_name}")
+				# nx.set_node_attributes(graph, )
 
 				for _ in range(3):
 					shuntyardresult.pop(counter - 2)
