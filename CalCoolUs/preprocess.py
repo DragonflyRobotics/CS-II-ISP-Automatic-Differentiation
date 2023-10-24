@@ -34,6 +34,7 @@ class ShuntingYard:
 		
 		lowerBound = 0	
 		upperBound = len(r) - 1
+		print(r)
 		while lowerBound < upperBound:
 			if r[lowerBound] == "-x":
 				r[lowerBound] = "-1"
@@ -42,7 +43,7 @@ class ShuntingYard:
 				lowerBound +=2
 				upperBound +=2
 			lowerBound += 1
-			
+		print(r)	
 		return r[1:]
 
 	def isfloat(self, number):
