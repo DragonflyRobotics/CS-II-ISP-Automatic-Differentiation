@@ -122,7 +122,7 @@ class ASTGraph:
 				return True
 		return False
 
-	def returnOperatorName(self, operator):
+	def returnOperatorName(self, operator, name=""):
 		match operator:
 			case "+":
 				return OpType.ADD
@@ -139,6 +139,8 @@ class ASTGraph:
 	def getAST(self, shuntyardresult):
 		graph = nx.DiGraph()
 
+		opDict = {}
+
 		while self.checkForOperators(shuntyardresult):
 			counter = 0
 			while shuntyardresult[counter] not in self.operations:
@@ -153,7 +155,8 @@ class ASTGraph:
 				graph.add_edge(str(shuntyardresult[counter - 1]), node_name)
 				print(f"{str(shuntyardresult[counter - 2])} --> {node_name}")
 				print(f"{str(shuntyardresult[counter - 1])} --> {node_name}")
-				# nx.set_node_attributes(graph, )
+
+				nx.set_node_attributes(graph, {node_name: {"Op": self.returnOperatorName(shuntyardresult[counter])}})
 
 				for _ in range(3):
 					shuntyardresult.pop(counter - 2)

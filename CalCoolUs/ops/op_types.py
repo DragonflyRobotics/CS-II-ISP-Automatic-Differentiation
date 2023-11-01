@@ -4,7 +4,7 @@ from CalCoolUs.ops.add import Add
 from CalCoolUs.ops.sub import Sub
 
 class OpType(Enum):
-	ADD = 0 #Add("works?")
+	ADD = Add("ADD")
 	SUB = 1 #Sub("works_again?")
 	MUL = 2
 	DIV = 3
