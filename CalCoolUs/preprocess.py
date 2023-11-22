@@ -15,36 +15,46 @@ class ShuntingYard:
 		self.operations = ["+", "-", "/", "*", "^"]
 	
 	def tokenize(self, string):
-		r = [""]
 		string = string.replace(" ", "")
+		tokenized = []
+		lowerBound = 0
+		upperBound = len(string)
 		for i in string:
-			if (i.isdigit() or i == ".") and self.isfloat(r[-1]):
-				r[-1] = r[-1] + i
+			if (i.isdigit() or i == ".") and self.isfloat(tokenized[-1]):
+				tokenized[-1] = tokenized[-1] + i
 			else:
-				r.append(i)
-		lowerBound = 0	
-		upperBound = len(r) - 1
+				tokenized.append(i)
+		lowerBound = 0    
+		upperBound = len(tokenized) - 1
 		while lowerBound < upperBound:
-			if r[lowerBound]== "-" and (r[lowerBound - 1] in self.operations or r[lowerBound - 1] == "(" or lowerBound == 0):
-				number = r[lowerBound + 1]
-				r[lowerBound] = f"-{number}"
-				r.pop(lowerBound + 1)
-				upperBound -= 1
+			if tokenized[lowerBound] == "-" and (tokenized[lowerBound - 1] in self.operations or tokenized[lowerBound - 1] == "(" or tokenized[lowerBound - 1] == "-(" or lowerBound == 0):
+				token = tokenized[lowerBound + 1]
+				tokenized[lowerBound] = f"-{token}"
+				tokenized.pop(lowerBound + 1)
+				upperBound -=1
 			lowerBound += 1
-		
-		lowerBound = 0	
-		upperBound = len(r) - 1
-		print(r)
+    
+		lowerBound = 0
+		upperBound = len(tokenized) - 1
 		while lowerBound < upperBound:
-			if r[lowerBound] == "-x":
-				r[lowerBound] = "-1"
-				r.insert(lowerBound + 1, "*")
-				r.insert(lowerBound + 2, "x")
-				lowerBound +=2
-				upperBound +=2
+			if tokenized[lowerBound] == "-x":
+				tokenized[lowerBound] = "-1"
+				tokenized.insert(lowerBound + 1, "*")
+				tokenized.insert(lowerBound + 2, "x")
+				lowerBound += 2
+				upperBound += 2
 			lowerBound += 1
-		print(r)	
-		return r[1:]
+		lowerBound = 0
+		upperBound = len(tokenized) - 1
+		while lowerBound < upperBound:
+			if tokenized[lowerBound] == "-(":
+				tokenized[lowerBound] = "-1"
+				tokenized.insert(lowerBound + 1, "*")
+				tokenized.insert(lowerBound + 2, "(")
+				lowerBound += 2
+				upperBound += 2
+			lowerBound += 1
+		return tokenized
 
 	def isfloat(self, number):
 		try:

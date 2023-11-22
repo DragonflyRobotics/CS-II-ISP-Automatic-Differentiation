@@ -11,9 +11,10 @@ from CalCoolUs.preprocess import ShuntingYard, OpType
 
 myshunt = ShuntingYard()
 
-shuntres = myshunt.tokenize("( (( x^ 200.31419)) + 66 ^ x) * ( -74 + -75 * -x )")
-shuntres = myshunt.getPostfix("( (( x^ 200.31419)) + 66 ^ x) * ( -74 + -75 * -x )")
-# exit(3)
+shuntres = myshunt.tokenize("( (( x^ 200.31419)) + 66 ^ x) * -( -74 + -75 * -x )")
+print(shuntres)
+shuntres = myshunt.getPostfix("( (( x^ 200.31419)) + 66 ^ x) * -( -74 + -75 * -x )")
+exit(3)
 from CalCoolUs.preprocess import ASTGraph
 
 myASTGraph = ASTGraph()
